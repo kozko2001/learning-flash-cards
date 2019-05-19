@@ -30,7 +30,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-s3`,
       options: {
-        bucketName: 'kzk-learning-flash-cards'
+        bucketName: 'kzk-flash-cards'
       }
     }
     // this (optional) plugin enables Progressive Web App + Offline functionality
