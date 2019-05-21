@@ -8,7 +8,7 @@ import Card from "../components/flash-card/flashCard"
 
 const IndexPage = (props) => {
   const questions = props.data.allMarkdownRemark.edges.map(e => e.node)
-  const cards = questions.map(q => <Card question={q.frontmatter.question} answer={q.html} key={q.frontmatter.question}/>)
+  const cards = questions.map(q => <Card ast={q.htmlAst} />)
 
   
   return (
@@ -34,7 +34,7 @@ export const query = graphql`
           frontmatter {
             question
           }
-          html
+          htmlAst
         }
       }
     }

@@ -1,5 +1,38 @@
 import React from "react"
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
+import rehypeReact from "rehype-react"
+
+const splitAST = (ast) => {
+    let answerFound = false
+    const question = []
+    const answer = []
+    
+    ast.children.forEach(f => {
+        if(f.tagName == 'h2' && f.children[0].value === 'Answer') {
+            answerFound = true;
+        }
+
+        if(!answerFound) 
+            question.push(f)
+        else
+            answer.push(f)       
+    })
+
+    return {
+        question: {...ast, children: question},
+        answer: {...ast, children: answer}
+    }
+}
+
+const renderAst = new rehypeReact({
+    createElement: React.createElement,
+  }).Compiler
+
+const CardAST = (props) => {
+    const {question, answer} = splitAST(props.ast)
+    
+    return (<Card question={renderAst(question)} answer={renderAst(answer)} />)
+}
 
 
 const Card = (props) => 
@@ -25,9 +58,9 @@ const Card = (props) =>
           textAlign: 'center',
           overflow: 'auto'
       }}>
-      <div dangerouslySetInnerHTML={{ __html: props.answer }} />
+      {props.answer}
     </BackSide>
 
   </Flippy>
 
-export default Card;
+export default CardAST;
