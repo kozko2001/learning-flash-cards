@@ -31,9 +31,6 @@ export const query = graphql`
     ) {
       edges {
         node {
-          frontmatter {
-            question
-          }
           htmlAst
         }
       }
