@@ -1,17 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const format = require('date-format');
-const { spawnSync} = require('child_process');
-var execSync = require('child_process').execSync;
-
-
-const child = spawnSync('git', ['add', '.']);
-
-console.log('error', child.error);
-console.log('stdout ', child.stdout);
-console.log('stderr ', child.stderr);
-
-console.log(execSync('git add .'))
+const { execSync} = require('child_process');
 
 const currentDate = format('dd/MM/yyyy', new Date());
 
@@ -55,7 +45,24 @@ date: ${currentDate}
 
     fs.writeFileSync(filepath, answers.question)
 
+    // 3. if commit is allowed do it!
+    if (answers.commit) {
+        try {
+            execSync(`git add ${filepath}`)
+            execSync(`git commit -m 'added question ${filepath}'`)
+            execSync(`git push`)
+        } catch (error) {
+            console.log(`could not make the commit ${error}`)
+        }
+    }
+    
 
+    console.log('error', child.error);
+    console.log('stdout ', child.stdout);
+    console.log('stderr ', child.stderr);
+    
+    console.log(execSync('git add .'))
+    
 
   });
 
