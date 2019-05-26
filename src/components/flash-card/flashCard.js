@@ -8,7 +8,7 @@ const splitAST = (ast) => {
     const answer = []
     
     ast.children.forEach(f => {
-        if(f.tagName == 'h2' && f.children[0].value === 'Answer') {
+        if(f.tagName === 'h2' && f.children[0].value === 'Answer') {
             answerFound = true;
         }
 
